@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UpdatejsonController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [UpdatejsonController::class, 'index']);
+Route::post('/update-json', [UpdatejsonController::class, 'updateJson'])->name('update-json');
+
