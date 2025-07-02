@@ -25,7 +25,6 @@ class UpdatejsonController extends Controller
                     $contador = 0;
                     $users = Arr::get($info, 'usuarios');
                     foreach ($users as $user => $value) {
-                        //$this->validateEmptyUsers($info['usuarios'][$contador],$fil,$info,$value);
                         if($value['tipoDocumentoIdentificacion'] == ''){
                             $info['usuarios'][$contador]['tipoDocumentoIdentificacion'] = '123';
                         }
