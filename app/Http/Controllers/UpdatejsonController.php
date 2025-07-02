@@ -264,40 +264,4 @@ class UpdatejsonController extends Controller
             }
         }
     }
-
-    public function validateEmptyUsers($validate,$url,$info,$user){
-        $dataUsers = array(
-            "tipoDocumentoIdentificacion" => "12345",
-            "numDocumentoIdentificacion" => "2345",
-            "tipoUsuario" => "345",
-            "codSexo" => "456",
-            "codPaisResidencia" => "567",
-            "codMunicipioResidencia" => "678",
-            "codZonaTerritorialResidencia" => "789",
-            "incapacidad" => "890",
-            "codPaisOrigen" => "012"
-        );
-        foreach($dataUsers as $key => $dataUser){
-            if($user[$key] == ''){
-                var_dump($validate[$key]);
-                echo $validate[$key];
-                echo '<br>';
-                echo "Ingresa por validacion<br>";
-                //$validate['tipoDocumentoIdentificacion'] = $dataUser;
-                $validate[$key] = $dataUser;
-                echo $validate[$key];
-                echo '<br>';
-                echo $dataUser;
-                echo '<br>';
-                var_dump($validate[$key]);
-            }else{
-                'No ingresa';
-            }
-        }
-        $updatedJsonUsers = json_encode($info, JSON_PRETTY_PRINT);
-        $val = File::put('C:/'.$url, $updatedJsonUsers);
-        echo '<br>';
-        echo $url;
-        dd($info);
-    }
 }
