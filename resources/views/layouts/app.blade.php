@@ -8,7 +8,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Jsonapp') }}</title>
+    <title>{{ config('app.name', 'Validador Json') }}</title>
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
