@@ -25,6 +25,7 @@ class UpdatejsonController extends Controller
             $contador = 0;
             $users = Arr::get($info, 'usuarios');
             foreach ($users as $user => $value) {
+                // Validaciones de campos obligatorios vacios
                 if($value['tipoDocumentoIdentificacion'] == ''){
                     $info['usuarios'][$contador]['tipoDocumentoIdentificacion'] = '123';
                 }
@@ -189,6 +190,7 @@ class UpdatejsonController extends Controller
                 if($medicamentos !== null){
                     $med = 0;
                     foreach ($medicamentos as $medicamento) {
+                        // Validaciones de campos obligatorios vacios
                         if($info['usuarios'][$contador]['servicios']['medicamentos'][$med]['consecutivo'] == ''){
                             $info['usuarios'][$contador]['servicios']['medicamentos'][$med]['consecutivo'] = '001';
                         }
@@ -223,6 +225,7 @@ class UpdatejsonController extends Controller
                 if($otrosServicios !== null){
                     $otros = 0;
                     foreach ($otrosServicios as $otrosServicio) {
+                        // Validaciones de campos obligatorios vacios
                         if($info['usuarios'][$contador]['servicios']['otrosServicios'][$otros]['consecutivo'] == ''){
                             $info['usuarios'][$contador]['servicios']['otrosServicios'][$otros]['consecutivo'] = '020';
                         }
@@ -264,21 +267,21 @@ class UpdatejsonController extends Controller
             'folder' => 'required|file|mimes:zip|max:10240', // Max 10MB
         ]);
         
-        // Store the ZIP file temporarily
+        // Guardar el archivo ZIP temporalmente
         $zipPath = $request->file('folder')->store('temp', 'local');
         $fullZipPath = storage_path('app/' . $zipPath);
         
-        // Extract the ZIP file
+        // Extraer el archivo ZIP
         $zip = new ZipArchive;
         if ($zip->open($fullZipPath) === TRUE) {
-            // Create a unique folder name
+            // Crear carpeta con nombre unico
             $folderName = 'uploads/' . uniqid() . '/';
             
-            // Extract to storage
+            // Extraer en storage
             $zip->extractTo(storage_path('app/public/' . $folderName));
             $zip->close();
             
-            // Delete the temporary ZIP file
+            // Eliminar archivo temporal ZIP
             Storage::delete($zipPath);
             
             $this->updateJson($folderName);
