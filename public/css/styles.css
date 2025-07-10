@@ -12,6 +12,12 @@ input{
     margin-bottom: 2em;
     padding: 10px 2em;
 }
+button{
+    border-radius: 7px;
+    margin: auto;
+    margin-bottom: 2em;
+    padding: 10px 2em;
+}
 .container-main{
     display: flex;
     justify-content: center;

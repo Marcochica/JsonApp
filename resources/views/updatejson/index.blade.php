@@ -6,11 +6,14 @@
             <h3>Actualización de archivos</h3>
           </div>
           <div>
-            <form action="{{ url('update-json') }}" method="POST">
+            <form action="{{ url('upload-folder') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-              <p>Agrega el nombre de la carpeta dentro de la unidad C, en el siguiente campo</p>
-              <input type="text" name="urlfolder" id="urlfolder" class="input-form">
-              <input type="submit" value="Actualizar archivos" name="submitbutton" id="btn-form" class="btn-form" onclick="viewLoader()">
+              <p>Adjunte la carpeta que contiene los archivos a modificar en formato ZIP.</p>
+              <div>
+                  <label for="folder">Selecione la carpeta (en formato ZIP):</label>
+                  <input type="file" name="folder" id="folder" accept=".zip" required>
+              </div>
+              <button type="submit" class="btn-form" onclick="viewLoader()">Subir Carpeta</button>
               <div class="loader" id="loader"></div>
           </div>
       </div>
@@ -28,9 +31,6 @@
         document.getElementById("btn-form").style.backgroundColor="#507ba1";
       }, 1000);
       document.getElementById("loader").style.display="block";
-    }
-    function addDisplay(){
-      document.getElementById("loader").style.display="none";
     }
   </script>
 @endsection
