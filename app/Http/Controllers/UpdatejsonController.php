@@ -334,21 +334,20 @@ class UpdatejsonController extends Controller
     }
 
     public function downloadFolder(Request $request){
-    //public function downloadFolder($nameFileZip){
-        // Descargando el archivo zip
+        // Preparando contenido para descargar el archivo zip
         $fileZip = storage_path('app\public\uploads\\'.$request->query('namefile').'.zip');
         $headers = array('Content-Type'=>'application/octet-stream',);
         $zip_new_name = "Archivos actualizados ".date("y-m-d-h-i-s").".zip";
-        return response()->download($fileZip,$zip_new_name,$headers);
-    }
 
-    public function deleteFiles($nameF){
-        Storage::disk('public')->delete($nameF);
-    }
-    public function functionMain(Request $request) {
-        $nameF = $request->query('namefile').'.zip';
-        $resultFirst= $this->downloadFolder($nameF);
-        $resultSecond = $this->deleteFiles($nameF);
-        return $resultFirst;
+        // Eliminar la carpeta creada
+        $folderPath = storage_path('app\public\uploads\\'.$request->query('namefile'));
+        if (File::exists($folderPath)) {
+            File::deleteDirectory($folderPath);
+        } else {
+            echo "La carpeta no existe.";
+        }
+        
+        // Iniciar la descarga del archivo zip
+        return response()->download($fileZip,$zip_new_name,$headers)->deleteFileAfterSend(true);
     }
 }
