@@ -14,6 +14,36 @@ class UpdatejsonController extends Controller
         return view('updatejson/index');
     }
 
+    public function uploadFolder(Request $request){
+        $request->validate([
+            'folder' => 'required|file|mimes:zip|max:30720', // Max 30MB
+        ]);
+        
+        // Guardar el archivo ZIP temporalmente
+        $zipPath = $request->file('folder')->store('temp', 'local');
+        $fullZipPath = storage_path('app/' . $zipPath);
+        
+        // Extraer el archivo ZIP
+        $zip = new ZipArchive;
+        if ($zip->open($fullZipPath) === TRUE) {
+            // Crear carpeta con nombre unico
+            $folderName = 'uploads/' . uniqid() . '/';
+            
+            // Extraer en storage
+            $zip->extractTo(storage_path('app/public/' . $folderName));
+            $zip->close();
+            
+            // Eliminar archivo temporal ZIP
+            Storage::delete($zipPath);
+            $this->updateJson($folderName);
+        }else{
+            $message = 'Hubo un fallo al extraer el archivo ZIP.';
+            return view('updatejson/message', compact('message'));  
+        }
+        $message = 'Archivos actualizados correctamente';
+        return view('updatejson/message', compact('message'));
+    }
+
     public function updateJson($folderName){
         $newName = explode('/', $folderName);
         $directoryPath = storage_path('app\public\uploads\\'.$newName[1]);
@@ -59,7 +89,7 @@ class UpdatejsonController extends Controller
                     $consu = 0;
                     foreach ($consults as $consult) {
                         // Cambios en campos
-                        $info['usuarios'][$contador]['servicios']['consultas'][$consu]['causaMotivoAtencion'] = "bien";
+                        $info['usuarios'][$contador]['servicios']['consultas'][$consu]['causaMotivoAtencion'] = "10111";
                         $info['usuarios'][$contador]['servicios']['consultas'][$consu]['finalidadTecnologiaSalud'] = "20";
                         // Validaciones de campos obligatorios vacios
                         if($info['usuarios'][$contador]['servicios']['consultas'][$consu]['consecutivo'] == ''){
@@ -258,38 +288,46 @@ class UpdatejsonController extends Controller
                 $contador++;
             }
         }
+        //Storage::disk('public')->download($newName[1]);
+        $this->downloadFolder($newName[1]);
         $message = 'Archivos actualizados correctamente';
         return view('updatejson/message', compact('message'));
     }
 
-    public function uploadFolder(Request $request){
-        $request->validate([
-            'folder' => 'required|file|mimes:zip|max:10240', // Max 10MB
-        ]);
-        
-        // Guardar el archivo ZIP temporalmente
-        $zipPath = $request->file('folder')->store('temp', 'local');
-        $fullZipPath = storage_path('app/' . $zipPath);
-        
-        // Extraer el archivo ZIP
+    public function downloadFolder($newName){
+        $folderName = $newName;
+        $publicPath = public_path('storage\uploads\\'.$folderName);
+        // Revisar si el folder existe
+        if (!file_exists($publicPath)) {
+            $message = 'La carpeta no se encuentra';
+            return view('updatejson/message', compact('message'));
+        }
+        // Crear un archivo zip temporal
         $zip = new ZipArchive;
-        if ($zip->open($fullZipPath) === TRUE) {
-            // Crear carpeta con nombre unico
-            $folderName = 'uploads/' . uniqid() . '/';
+        $zipFileName = storage_path('app/public/uploads/'.$folderName.'.zip');
+        
+        if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
+            // Agregar todos los archivos desde el folder al zip
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($publicPath),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
             
-            // Extraer en storage
-            $zip->extractTo(storage_path('app/public/' . $folderName));
+            foreach ($files as $name => $file) {
+                if (!$file->isDir()) {
+                    $filePath = $file->getRealPath();
+                    $relativePath = substr($filePath, strlen($publicPath) + 1);
+                    $zip->addFile($filePath, $relativePath);
+                }
+            }
+            
             $zip->close();
             
-            // Eliminar archivo temporal ZIP
-            Storage::delete($zipPath);
+            // Descargando el archivo zip
             
-            $this->updateJson($folderName);
-        }else{
-            $message = 'Hubo un fallo al extraer el archivo ZIP.';
-            return view('updatejson/message', compact('message'));  
+        } else {
+            $message = 'No puede crear el archivo zip';
+            return view('updatejson/message', compact('message'));
         }
-        $message = 'Archivos actualizados correctamente';
-        return view('updatejson/message', compact('message'));
     }
 }
