@@ -22,6 +22,7 @@ class UpdatejsonController extends Controller
         // Guardar el archivo ZIP temporalmente
         $zipPath = $request->file('folder')->store('temp', 'local');
         $fullZipPath = storage_path('app/' . $zipPath);
+        $folderName = '';
         
         // Extraer el archivo ZIP
         $zip = new ZipArchive;
@@ -40,8 +41,10 @@ class UpdatejsonController extends Controller
             $message = 'Hubo un fallo al extraer el archivo ZIP.';
             return view('updatejson/message', compact('message'));  
         }
+        $folderArray = explode('/', $folderName);
+        $folderSend = $folderArray[1];
         $message = 'Archivos actualizados correctamente';
-        return view('updatejson/message', compact('message'));
+        return view('updatejson/message', compact('message','folderSend'));
     }
 
     public function updateJson($folderName){
@@ -289,12 +292,12 @@ class UpdatejsonController extends Controller
             }
         }
         //Storage::disk('public')->download($newName[1]);
-        $this->downloadFolder($newName[1]);
+        $this->compressFolder($newName[1]);
         $message = 'Archivos actualizados correctamente';
         return view('updatejson/message', compact('message'));
     }
 
-    public function downloadFolder($newName){
+    public function compressFolder($newName){
         $folderName = $newName;
         $publicPath = public_path('storage\uploads\\'.$folderName);
         // Revisar si el folder existe
@@ -322,12 +325,20 @@ class UpdatejsonController extends Controller
             }
             
             $zip->close();
-            
-            // Descargando el archivo zip
-            
+            $nameFileZip = $folderName.'.zip';
+            $this->downloadFolder($nameFileZip);
         } else {
             $message = 'No puede crear el archivo zip';
             return view('updatejson/message', compact('message'));
         }
+    }
+
+    public function downloadFolder(Request $request){
+    //public function downloadFolder($nameFileZip){
+        // Descargando el archivo zip
+        $fileZip = storage_path('app\public\uploads\\'.$nameFileZip);
+        $headers = array('Content-Type'=>'application/octet-stream',);
+        $zip_new_name = "Archivos actualizados ".date("y-m-d-h-i-s").".zip";
+        return response()->download($fileZip,$zip_new_name,$headers);
     }
 }
