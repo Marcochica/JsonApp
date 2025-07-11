@@ -326,7 +326,7 @@ class UpdatejsonController extends Controller
             
             $zip->close();
             $nameFileZip = $folderName.'.zip';
-            $this->downloadFolder($nameFileZip);
+            //$this->downloadFolder($nameFileZip);
         } else {
             $message = 'No puede crear el archivo zip';
             return view('updatejson/message', compact('message'));
@@ -336,9 +336,19 @@ class UpdatejsonController extends Controller
     public function downloadFolder(Request $request){
     //public function downloadFolder($nameFileZip){
         // Descargando el archivo zip
-        $fileZip = storage_path('app\public\uploads\\'.$nameFileZip);
+        $fileZip = storage_path('app\public\uploads\\'.$request->query('namefile').'.zip');
         $headers = array('Content-Type'=>'application/octet-stream',);
         $zip_new_name = "Archivos actualizados ".date("y-m-d-h-i-s").".zip";
         return response()->download($fileZip,$zip_new_name,$headers);
+    }
+
+    public function deleteFiles($nameF){
+        Storage::disk('public')->delete($nameF);
+    }
+    public function functionMain(Request $request) {
+        $nameF = $request->query('namefile').'.zip';
+        $resultFirst= $this->downloadFolder($nameF);
+        $resultSecond = $this->deleteFiles($nameF);
+        return $resultFirst;
     }
 }
