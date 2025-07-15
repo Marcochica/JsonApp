@@ -44,6 +44,9 @@ button{
     padding: 10px 2em;
     text-decoration: none;
 }
+.message-error{
+    color: red;
+}
 .loader {
   border: 2px solid;
   border-radius: 20px;

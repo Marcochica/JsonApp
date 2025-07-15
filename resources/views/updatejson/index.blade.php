@@ -2,6 +2,9 @@
 @section('content')
     <div class="container-main">
       <div class="subcontainer-main">
+          <h3 class="message-error">
+            {{ $message }}
+          </h3>
           <div>
             <h3>Actualización de archivos</h3>
           </div>
@@ -23,6 +26,7 @@
       var historyTraversal = event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
       if ( historyTraversal ) {
         window.location.reload();
+        <?php $message = ''; ?>
       }
     });
     function viewLoader(params) {
