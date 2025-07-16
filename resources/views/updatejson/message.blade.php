@@ -19,7 +19,6 @@
     </div>
     <script>
       function redirect() {
-        console.log('Ejecuta script');
          setTimeout(function () { window.location = "http://181.48.157.114:8184/" }, 1000);
       }
     </script>
