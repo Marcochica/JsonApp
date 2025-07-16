@@ -6,7 +6,7 @@
             {{ $message }}
           </h3>
           <div>
-            <h3>Actualización de archivos</h3>
+            <h2>Actualización de archivos</h2>
           </div>
           <div>
             <form action="{{ url('upload-folder') }}" method="POST" enctype="multipart/form-data">

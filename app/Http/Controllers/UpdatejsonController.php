@@ -154,25 +154,24 @@ class UpdatejsonController extends Controller
                         $counterConsult = 0;
                         foreach ($consults as $consult) {
                             // Cambios en campos
-                            if($information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['causaMotivoAtencion'] == 13
+                            if($information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['causaMotivoAtencion'] == '13'
                                 || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['causaMotivoAtencion'] == '')
                             {
-                                $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['causaMotivoAtencion'] = "38";
+                                $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['causaMotivoAtencion'] = '38';
                             }
-                            if($information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] == 10 
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 1
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 2
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 3
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 4
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 5
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = "")
+                            if($information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] == '10' 
+                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = '1'
+                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = '2'
+                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = '3'
+                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = '4'
+                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = '5'
+                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = '')
                             {
-                                $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = "15";
+                                $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = '15';
                             }
-                            
                             // Validaciones de campos obligatorios vacios
                             if($information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['consecutivo'] == ''){
-                                $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['consecutivo'] = '0000';
+                                $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['consecutivo'] = 0000;
                             }
                             if($information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['codPrestador'] == ''){
                                 $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['codPrestador'] = '1111';
@@ -209,10 +208,10 @@ class UpdatejsonController extends Controller
                         $counterEmergency = 0;
                         foreach ($emergencies as $emergency) {
                             // Cambios en campos
-                            if($information['usuarios'][$counter]['servicios']['urgencias'][$counterEmergency]['causaMotivoAtencion'] == 13
+                            if($information['usuarios'][$counter]['servicios']['urgencias'][$counterEmergency]['causaMotivoAtencion'] == '13'
                                 || $information['usuarios'][$counter]['servicios']['urgencias'][$counterEmergency]['causaMotivoAtencion'] == '')
                             {
-                                $information['usuarios'][$counter]['servicios']['urgencias'][$counterEmergency]['causaMotivoAtencion'] = "38";
+                                $information['usuarios'][$counter]['servicios']['urgencias'][$counterEmergency]['causaMotivoAtencion'] = '38';
                             }
                             // Validaciones de campos obligatorios vacios
                             if($information['usuarios'][$counter]['servicios']['urgencias'][$counterEmergency]['consecutivo'] == ''){
@@ -238,10 +237,10 @@ class UpdatejsonController extends Controller
                         $counterProcedure = 0;
                         foreach ($procedures as $procedure) {
                             // Cambios en campos
-                            $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['viaIngresoServicioSalud'] = "1";
+                            $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['viaIngresoServicioSalud'] = '1';
                             // Validaciones de campos obligatorios vacios
                             if($information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['consecutivo'] == ''){
-                                $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['consecutivo'] = '2';
+                                $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['consecutivo'] = 2;
                             }
                             if($information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['codPrestador'] == ''){
                                 $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['codPrestador'] = '3';
@@ -255,12 +254,12 @@ class UpdatejsonController extends Controller
                             if($information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['grupoServicios'] == ''){
                                 $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['grupoServicios'] = '6';
                             }
-                            if($information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] == 10 
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 1
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 2
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 3
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 4
-                                || $information['usuarios'][$counter]['servicios']['consultas'][$counterConsult]['finalidadTecnologiaSalud'] = 5
+                            if($information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['finalidadTecnologiaSalud'] == '10' 
+                                || $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['finalidadTecnologiaSalud'] = '1'
+                                || $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['finalidadTecnologiaSalud'] = '2'
+                                || $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['finalidadTecnologiaSalud'] = '3'
+                                || $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['finalidadTecnologiaSalud'] = '4'
+                                || $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['finalidadTecnologiaSalud'] = '5'
                                 || $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['finalidadTecnologiaSalud'] == '')
                             {
                                 $information['usuarios'][$counter]['servicios']['procedimientos'][$counterProcedure]['finalidadTecnologiaSalud'] = '7';
@@ -285,17 +284,17 @@ class UpdatejsonController extends Controller
                         $counterHospitalization = 0;
                         foreach ($hospitalization as $valueHospitalization) {
                             // Cambios en campos
-                            if($information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['causaMotivoAtencion'] == 13
+                            if($information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['causaMotivoAtencion'] == '13'
                                 || $information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['causaMotivoAtencion'] == '')
                             {
-                                $information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['causaMotivoAtencion'] = "38";
+                                $information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['causaMotivoAtencion'] = '38';
                             }
                             // Validaciones de campos obligatorios vacios
-                            if($information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['viaIngresoServicioSalud'] = ""){
-                                $information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['viaIngresoServicioSalud'] = "04";
+                            if($information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['viaIngresoServicioSalud'] = ''){
+                                $information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['viaIngresoServicioSalud'] = '04';
                             }
                             if($information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['consecutivo'] == ''){
-                                $information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['consecutivo'] = '03';
+                                $information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['consecutivo'] = 03;
                             }
                             if($information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['codPrestador'] == ''){
                                 $information['usuarios'][$counter]['servicios']['hospitalizacion'][$counterHospitalization]['codPrestador'] = '04';
@@ -318,7 +317,7 @@ class UpdatejsonController extends Controller
                         foreach ($medications as $medication) {
                             // Validaciones de campos obligatorios vacios
                             if($information['usuarios'][$counter]['servicios']['medicamentos'][$counterMedication]['consecutivo'] == ''){
-                                $information['usuarios'][$counter]['servicios']['medicamentos'][$counterMedication]['consecutivo'] = '001';
+                                $information['usuarios'][$counter]['servicios']['medicamentos'][$counterMedication]['consecutivo'] = 001;
                             }
                             if($information['usuarios'][$counter]['servicios']['medicamentos'][$counterMedication]['codPrestador'] == ''){
                                 $information['usuarios'][$counter]['servicios']['medicamentos'][$counterMedication]['codPrestador'] = '002';
@@ -353,7 +352,7 @@ class UpdatejsonController extends Controller
                         foreach ($otherServices as $otherService) {
                             // Validaciones de campos obligatorios vacios
                             if($information['usuarios'][$counter]['servicios']['otrosServicios'][$counterOtherService]['consecutivo'] == ''){
-                                $information['usuarios'][$counter]['servicios']['otrosServicios'][$counterOtherService]['consecutivo'] = '020';
+                                $information['usuarios'][$counter]['servicios']['otrosServicios'][$counterOtherService]['consecutivo'] = 020;
                             }
                             if($information['usuarios'][$counter]['servicios']['otrosServicios'][$counterOtherService]['codPrestador'] == ''){
                                 $information['usuarios'][$counter]['servicios']['otrosServicios'][$counterOtherService]['codPrestador'] = '030';
