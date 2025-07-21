@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use ZipArchive;
 use Log;
 
@@ -420,8 +422,12 @@ class UpdatejsonController extends Controller
                     $zip->addFile($filePath, $relativePath);
                 }
             }
-            
             $zip->close();
+
+            // Se agrega nuevo campo en la base de datos
+            $folderNew = new Folder;
+            $folderNew->name = $folderName;
+            $folderNew->save();
         } else {
             $message = 'No puede crear el archivo zip';
             return view('updatejson/message', compact('message'));
@@ -439,7 +445,15 @@ class UpdatejsonController extends Controller
         if (File::exists($folderPath)) {
             File::deleteDirectory($folderPath);
         }
-        
+
+        // Se cambia el valor de la descarga en la base de datos
+        $folderDischarged = Folder::select('id')->where('name', $request->query('namefile'))->get();
+        foreach($folderDischarged as $fDischarged){
+            $folder = Folder::findOrFail($fDischarged->id);
+            $folder->discharged = 1;
+            $folder->save();
+        }
+
         // Iniciar la descarga del archivo zip
         return response()->download($fileZip,$zip_new_name,$headers)->deleteFileAfterSend(true);
     }

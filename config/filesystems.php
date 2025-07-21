@@ -38,12 +38,6 @@ return [
             'report' => false,
         ],
 
-        'c_drive' => [
-            'driver' => 'local',
-            'root' => 'C:/',
-            'throw' => false,
-        ],
-
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public/uploads'),
